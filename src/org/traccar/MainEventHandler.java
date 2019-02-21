@@ -106,9 +106,16 @@ public class MainEventHandler extends ChannelInboundHandlerAdapter {
                         break;
                 }
             }
+            builder.append(' ');
+            builder.append(position.toString());
             LOGGER.info(builder.toString());
 
             Context.getStatisticsManager().registerMessageStored(position.getDeviceId());
+        } else {
+            StringBuilder builder = new StringBuilder();
+            builder.append(formatChannel(ctx.channel())).append(" ");
+            builder.append(msg.toString());
+            LOGGER.info(builder.toString());
         }
     }
 
