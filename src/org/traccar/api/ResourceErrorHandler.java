@@ -15,6 +15,8 @@
  */
 package org.traccar.api;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.traccar.helper.Log;
 
 import javax.ws.rs.WebApplicationException;
@@ -22,9 +24,11 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
 public class ResourceErrorHandler implements ExceptionMapper<Exception> {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ResourceErrorHandler.class);
 
     @Override
     public Response toResponse(Exception e) {
+        LOGGER.error("Unhandled exception", e);
         if (e instanceof WebApplicationException) {
             WebApplicationException exception = (WebApplicationException) e;
             String message;
