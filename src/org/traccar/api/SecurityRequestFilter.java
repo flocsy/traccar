@@ -108,7 +108,7 @@ public class SecurityRequestFilter implements ContainerRequestFilter {
                 if (!XML_HTTP_REQUEST.equals(request.getHeader(X_REQUESTED_WITH))) {
                     responseBuilder.header(WWW_AUTHENTICATE, BASIC_REALM);
                 }
-                throw new WebApplicationException(responseBuilder.build());
+                throw new WebApplicationException(request.getRequestURI(), responseBuilder.build());
             }
         }
 
