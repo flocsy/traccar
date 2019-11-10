@@ -15,9 +15,11 @@
  */
 package org.traccar.model;
 
-import java.util.Date;
-
 import org.traccar.database.QueryIgnore;
+import org.traccar.helper.DateUtil;
+
+import java.util.Date;
+import java.util.StringJoiner;
 
 public class Position extends Message {
 
@@ -82,6 +84,9 @@ public class Position extends Message {
     public static final String KEY_BLOCKED = "blocked";
     public static final String KEY_DOOR = "door";
     public static final String KEY_AXLE_WEIGHT = "axleWeight";
+    public static final String KEY_G_SENSOR = "gSensor";
+    public static final String KEY_ICCID = "iccid";
+    public static final String KEY_PHONE = "phone";
 
     public static final String KEY_DTCS = "dtcs";
     public static final String KEY_OBD_SPEED = "obdSpeed"; // knots
@@ -157,7 +162,7 @@ public class Position extends Message {
         this.protocol = protocol;
     }
 
-    private Date serverTime;
+    private Date serverTime = new Date();
 
     public Date getServerTime() {
         return serverTime;
@@ -299,4 +304,24 @@ public class Position extends Message {
         return super.getType();
     }
 
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", Position.class.getSimpleName() + "[", "]")
+                .add("protocol='" + protocol + "'")
+                .add("serverTime=" + DateUtil.formatDate(serverTime, false))
+                .add("deviceTime=" + DateUtil.formatDate(deviceTime, false))
+                .add("fixTime=" + DateUtil.formatDate(fixTime, false))
+                .add("outdated=" + outdated)
+                .add("valid=" + valid)
+                .add("latitude=" + latitude)
+                .add("longitude=" + longitude)
+                .add("altitude=" + altitude)
+                .add("speed=" + speed)
+                .add("course=" + course)
+                .add("address='" + address + "'")
+                .add("accuracy=" + accuracy)
+                .add("network=" + network)
+                .add(super.toString())
+                .toString();
+    }
 }
